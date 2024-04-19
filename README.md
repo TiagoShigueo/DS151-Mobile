@@ -10,6 +10,9 @@ Tutorial baseado na documentação do Expo
 ### Editando projeto
 ```Editar o arquivo App.js```
 
-### Compilando o projeto
+### Compilando o projeto para mobile
 ```npx expo start``` \
 Escanear o QR Code no celular
+
+### Compilando o projeto para Web
+```npm run web```
