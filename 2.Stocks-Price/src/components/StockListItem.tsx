@@ -5,6 +5,17 @@ import { StyleSheet, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useMutation, gql } from "@apollo/client";
+
+const mutation = gql`
+  mutation Mymutation($symbol: String!, $user_id: String!) {
+    insertFavorites(symbol: $symbol, user_id: $user_id) {
+      id
+      symbol
+      user_id
+    }
+  }
+`;
 
 // Declarando que o name dentro do Stock é uma string
 type Stock = {
@@ -20,7 +31,15 @@ type StockListItem = {
 };
 
 export default function StockListItem({ stock }: StockListItem) {
+  const [runMutation] = useMutation(mutation, {
+    variables: { user_id: "vadim", symbol: stock.symbol },
+  });
+
   const change = Number.parseFloat(stock.percent_change);
+
+  const onFavoritesPressed = () => {
+    runMutation();
+  };
 
   return (
     // Link importado do expo-router joga para a página desejada Link href={"/stock"}
@@ -31,7 +50,13 @@ export default function StockListItem({ stock }: StockListItem) {
         <View style={{ flex: 1, gap: 5 }}>
           {/*Flex: 1 joga o outro container filho para o outro lado */}
           <Text style={styles.symbol}>
-            {stock.symbol} <AntDesign name="staro" size={18} color="gray" />
+            {stock.symbol}{" "}
+            <AntDesign
+              onPress={onFavoritesPressed}
+              name="staro"
+              size={18}
+              color="gray"
+            />
           </Text>
           <Text style={{ color: "gray" }}>{stock.name}</Text>
         </View>

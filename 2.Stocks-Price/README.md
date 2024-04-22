@@ -27,10 +27,14 @@ Consulta de cotação
 
 - Twelve Data
 
-Banco de Dado (mas acho q é só o GraphQL)
+Ponte para as queries das APIs (?) (não entendi direito para que serve)
 
-- StepZen
+- StepZen [IBM](https://us-east-a.dashboard.ibm.stepzen.com/?instance=20240422-1436-2802-90e2-d3b10f216226&environment=pokokmadang&endpoint=api%2Fhonking-marmot)
 
 GraphQL
 
 - Apollo
+
+PostgreeSQL
+
+- Neon Tech
