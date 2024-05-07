@@ -1,12 +1,23 @@
 import { StyleSheet } from "react-native";
 
-import Home from "@/app/(tabs)/Home";
+import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
+import yahooFinance from "yahoo-finance2";
 
 export default function TabOneScreen() {
+  let result;
+  result = yahooFinance.quote("HGBS11.SA");
+  console.log(result);
+
   return (
     <View style={styles.container}>
-      <Home />
+      <Text style={styles.title}>Tab One</Text>
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
+      <EditScreenInfo path="app/(tabs)/index.tsx" />
     </View>
   );
 }
