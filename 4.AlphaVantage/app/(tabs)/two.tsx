@@ -7,21 +7,6 @@ const AlphaVantageScreen = () => {
   const [stockDataList, setStockDataList] = useState([]);
 
   useEffect(() => {
-    // const fetchStockData = async (symbol) => {
-    //   try {
-    //     const response = await axios.get(
-    //       `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`
-    //     );
-    //     return response.data;
-    //   } catch (error) {
-    //     console.error("Erro ao buscar os dados da API:", error);
-    //     return null;
-    //   }
-    // };
-
-    // const API_KEY = "KM3PTTHZNI45GUWJ";
-    // const API_KEY = "YU938S42CFRSI15H";
-
     const symbols = [
       "KNIP11.SA",
       "XPML11.SA",
@@ -31,15 +16,13 @@ const AlphaVantageScreen = () => {
     ]; // Lista de símbolos de ações que você deseja consultar
 
     const fetchDataForSymbols = async () => {
-      const newDataList = [];
+      const newDataList: any = [];
       for (const symbol of symbols) {
-        // const data = await fetchStockData(symbol);
         const data = await alphaVantage(symbol);
         newDataList.push(data);
       }
       setStockDataList(newDataList);
     };
-
     fetchDataForSymbols();
   }, []);
 
