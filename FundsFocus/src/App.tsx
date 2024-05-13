@@ -1,21 +1,37 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./src/screens/Login";
-import Details from "./src/screens/Details";
-import List from "./src/screens/List";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { FIREBASE_AUTH } from "./FirebaseConfig";
+import { FIREBASE_AUTH } from "../FirebaseConfig";
+import Login from "./screens/Login";
+import Details from "./screens/Details";
+import List from "./screens/List";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import HomeScreen from "./screens/Home";
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
 
 function InsideLayout() {
   return (
-    <InsideStack.Navigator>
-      <InsideStack.Screen name="My todos" component={List} />
-      <InsideStack.Screen name="details" component={Details} />
-    </InsideStack.Navigator>
+    <>
+      <Navbar />
+      <InsideStack.Navigator>
+        <InsideStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        {/* <InsideStack.Screen
+          name="My todos"
+          component={List}
+          options={{ headerShown: false }}
+        />
+        <InsideStack.Screen name="details" component={Details} /> */}
+      </InsideStack.Navigator>
+      <Footer />
+    </>
   );
 }
 
