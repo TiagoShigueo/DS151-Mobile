@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Button, TextInput } from "react-native";
-import { adicionarFiiNaCarteira } from "../services/firebase";
+import { adicionarFiiNaCarteira, obterIdUsuario } from "../services/firebase";
+import { getUserId } from "../utils/User";
 
 const Portfolio = () => {
   const [codigoFii, setCodigoFii] = useState("");
   const [quantidadeFii, setQuantidadeFii] = useState("");
   const [valorFii, setValorFii] = useState("");
+  const userId: string = getUserId()!;
 
   const adicionarFii = async () => {
     // Validar os dados, se necessário
@@ -17,13 +19,20 @@ const Portfolio = () => {
 
     // Exemplo de uso
     const novoFii = {
+      // codigo: "300135.SHZ",
+      // nome: "300135.SHZ",
+      // valor: 150.0,
       codigo: "IBM",
       nome: "ibm",
       valor: 100.0,
     };
 
     // Chamar o método para adicionar o FII na carteira
-    await adicionarFiiNaCarteira("Tiago", novoFii);
+    await adicionarFiiNaCarteira(userId, novoFii);
+  };
+
+  const obterIdUser = async () => {
+    await obterIdUsuario();
   };
 
   return (
@@ -45,6 +54,7 @@ const Portfolio = () => {
         keyboardType="numeric"
       />
       <Button title="Adicionar FII" onPress={adicionarFii} />
+      <Button title="Buscar UId do usuário" onPress={obterIdUser} />
     </>
   );
 };

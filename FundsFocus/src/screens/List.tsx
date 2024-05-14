@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
-
+import { getIdToken } from "firebase/auth";
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
@@ -17,6 +17,7 @@ const List = ({ navigation }: RouterProps) => {
       done: false,
     });
   };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center " }}>
       <Button
