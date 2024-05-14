@@ -23,12 +23,12 @@ function InsideLayout() {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-        {/* <InsideStack.Screen
-          name="My todos"
+        <InsideStack.Screen
+          name="My_todos"
           component={List}
           options={{ headerShown: false }}
         />
-        <InsideStack.Screen name="details" component={Details} /> */}
+        <InsideStack.Screen name="details" component={Details} />
       </InsideStack.Navigator>
       <Footer />
     </>

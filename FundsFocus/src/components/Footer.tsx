@@ -1,33 +1,51 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-// Componente Footer
+import { View, TouchableOpacity, Text, StyleSheet, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+type RootStackParamList = {
+  Home: undefined;
+  details: undefined;
+  My_todos: undefined;
+  // Adicione mais telas conforme necessário
+};
+type FooterNavigationProp = StackNavigationProp<RootStackParamList>;
+
 const Footer = () => {
+  const navigation = useNavigation<FooterNavigationProp>();
+
+  const navigateToScreen = (screenName: keyof RootStackParamList) => {
+    // Defina o tipo do parâmetro
+    navigation.navigate(screenName);
+  };
+
   return (
     <View style={styles.footer}>
-      <Text style={styles.footerText}>© 2024 FundsFocus</Text>
+      <TouchableOpacity onPress={() => navigateToScreen("Home")}>
+        <Text style={styles.buttonText}>Home</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigateToScreen("details")}>
+        <Text style={styles.buttonText}>details</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigateToScreen("My_todos")}>
+        <Text style={styles.buttonText}>List</Text>
+      </TouchableOpacity>
+      {/* Adicione mais botões de navegação conforme necessário */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  navbar: {
-    backgroundColor: "#333",
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  navbarTitle: {
-    color: "#fff",
-    fontSize: 20,
-  },
   footer: {
-    backgroundColor: "#333",
-    padding: 10,
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
+    backgroundColor: "#ccc",
+    paddingVertical: 10,
   },
-  footerText: {
-    color: "#fff",
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
