@@ -9,6 +9,7 @@ import List from "./screens/List";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/Home";
+import Portfolio from "./screens/Portfolio";
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
@@ -28,7 +29,11 @@ function InsideLayout() {
           component={List}
           options={{ headerShown: false }}
         />
-        <InsideStack.Screen name="details" component={Details} />
+        <InsideStack.Screen
+          name="Portfolio"
+          component={Portfolio}
+          options={{ headerShown: false }}
+        />
       </InsideStack.Navigator>
       <Footer />
     </>

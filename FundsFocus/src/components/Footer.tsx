@@ -5,7 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 type RootStackParamList = {
   Home: undefined;
-  details: undefined;
+  Portfolio: undefined;
   My_todos: undefined;
   // Adicione mais telas conforme necessário
 };
@@ -24,8 +24,8 @@ const Footer = () => {
       <TouchableOpacity onPress={() => navigateToScreen("Home")}>
         <Text style={styles.buttonText}>Home</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigateToScreen("details")}>
-        <Text style={styles.buttonText}>details</Text>
+      <TouchableOpacity onPress={() => navigateToScreen("Portfolio")}>
+        <Text style={styles.buttonText}>Carteira</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigateToScreen("My_todos")}>
         <Text style={styles.buttonText}>List</Text>
