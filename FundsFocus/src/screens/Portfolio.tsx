@@ -1,38 +1,57 @@
-import React, { useState } from "react";
-import { Button, TextInput } from "react-native";
-import { adicionarFiiNaCarteira, obterIdUsuario } from "../services/firebase";
+import React, { useEffect, useState } from "react";
+import { Button, TextInput, Text, View, FlatList } from "react-native";
+import { adicionarFiiNaCarteira, obterCarteira } from "../services/firebase";
 import { getUserId } from "../utils/User";
+import { DocumentData } from "firebase/firestore";
+import PortfolioItem from "../components/PortfolioItem";
 
 const Portfolio = () => {
   const [codigoFii, setCodigoFii] = useState("");
   const [quantidadeFii, setQuantidadeFii] = useState("");
   const [valorFii, setValorFii] = useState("");
-  const userId: string = getUserId()!;
+  const [carteira, setCarteira] = useState<DocumentData | null | undefined>(
+    null
+  );
 
-  const adicionarFii = async () => {
-    // Validar os dados, se necessário
-    // const novoFii = {
-    //   codigo: codigoFii,
-    //   nome: nomeFii,
-    //   valor: parseFloat(valorFii),
-    // };
+  useEffect(() => {
+    carregarCarteira();
+  }, []);
 
-    // Exemplo de uso
-    const novoFii = {
-      // codigo: "300135.SHZ",
-      // nome: "300135.SHZ",
-      // valor: 150.0,
-      codigo: "IBM",
-      nome: "ibm",
-      valor: 100.0,
-    };
-
-    // Chamar o método para adicionar o FII na carteira
-    await adicionarFiiNaCarteira(userId, novoFii);
+  const carregarCarteira = async () => {
+    try {
+      const userId = (await getUserId()) ?? "";
+      const carteiraUsuario = await obterCarteira(userId);
+      setCarteira(carteiraUsuario);
+    } catch (error) {
+      console.error("Erro ao carregar a carteira do usuário: ", error);
+    }
   };
 
-  const obterIdUser = async () => {
-    await obterIdUsuario();
+  const adicionarFii = async () => {
+    try {
+      /* ?? é o operador de coalescência nula, que fornece um valor padrão no caso de userId ser nulo */
+      const userId = (await getUserId()) ?? "";
+
+      // const novoFii = {
+      //   codigo: codigoFii,
+      //   nome: nomeFii,
+      //   valor: parseFloat(valorFii),
+      // };
+
+      // Exemplo de uso
+      const novoFii = {
+        // codigo: "300135.SHZ",
+        // nome: "300135.SHZ",
+        // valor: 150.0,
+        codigo: "IBM",
+        nome: "ibm",
+        valor: 100.0,
+      };
+      await adicionarFiiNaCarteira(userId, novoFii);
+      await carregarCarteira();
+    } catch (error) {
+      console.error("Erro ao adicionar FII à carteira: ", error);
+    }
   };
 
   return (
@@ -54,7 +73,13 @@ const Portfolio = () => {
         keyboardType="numeric"
       />
       <Button title="Adicionar FII" onPress={adicionarFii} />
-      <Button title="Buscar UId do usuário" onPress={obterIdUser} />
+
+      <FlatList
+        data={carteira}
+        renderItem={({ item }) => <PortfolioItem item={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<Text>Nenhum item na carteira.</Text>}
+      />
     </>
   );
 };

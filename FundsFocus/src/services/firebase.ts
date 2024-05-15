@@ -1,5 +1,5 @@
 import firestore, { firebase } from '@react-native-firebase/firestore';
-import { addDoc, collection } from 'firebase/firestore';
+import { DocumentData, addDoc, collection, getDocs, query } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
 export const adicionarFiiNaCarteira = async (userId: string, novoFii: any) => {
@@ -12,35 +12,32 @@ export const adicionarFiiNaCarteira = async (userId: string, novoFii: any) => {
       }
 };
 
-export const obterCarteira = async (userId: string) => {
+export const obterCarteira = async (userId: string): Promise<any[] | null> => {
   try {
-    const snapshot = await firestore()
-      .collection('carteiras')
-      .doc(userId)
-      .get();
-    if (snapshot.exists) {
-      return snapshot.data();
-    } else {
-      console.log('Nenhuma carteira encontrada para este usuário.');
-      return null;
-    }
-  } catch (error) {
+    const q = query(collection(FIREBASE_DB, `carteiras/${userId}/ativos`));
+    const querySnapshot = await getDocs(q);
+    const carteira = querySnapshot.docs.map((doc) => ({
+      id:doc.id,
+      ...doc.data(),
+    }));
+    return carteira;
+  }catch (error) {
     console.error('Erro ao obter carteira: ', error);
     return null;
   }
 };
 
-export const obterIdUsuario = () => {
-  // const usuarioAtual = auth().currentUser;
-  // if (usuarioAtual) {
-  //   console.log('Usuário atual UId: ' + usuarioAtual.uid);
-  //   return usuarioAtual.uid;
-  // } else {
-  //   console.log('Não foi possível buscar o UId do usuário');
-  //   return null
-  // }
+// export const obterIdUsuario = () => {
+//   // const usuarioAtual = auth().currentUser;
+//   // if (usuarioAtual) {
+//   //   console.log('Usuário atual UId: ' + usuarioAtual.uid);
+//   //   return usuarioAtual.uid;
+//   // } else {
+//   //   console.log('Não foi possível buscar o UId do usuário');
+//   //   return null
+//   // }
 
-  const user = firebase.auth().currentUser;
-  if (user)
-    console.log('User email: ', user.email);
-}
+//   const user = firebase.auth().currentUser;
+//   if (user)
+//     console.log('User email: ', user.email);
+// }

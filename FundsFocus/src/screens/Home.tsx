@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import StockItem from "../components/StockItem";
 import alphaVantage from "../services/alphaVantage";
 import idv from "../constants/Idv";
-import { FlatList } from "react-native";
 
 const HomeScreen = () => {
   const [stockDataList, setStockDataList] = useState([]);
