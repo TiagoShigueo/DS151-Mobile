@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import StockItem from "../components/StockItem";
-import alphaVantage from "../services/alphaVantage";
+import { alphaVantageGlobalQuote } from "../services/alphaVantage";
 import idv from "../constants/Idv";
 
 const HomeScreen = () => {
@@ -14,7 +14,7 @@ const HomeScreen = () => {
 
     const axiosDataForSymbols = async () => {
       for (const symbol of symbols) {
-        const data = await alphaVantage(symbol);
+        const data = await alphaVantageGlobalQuote(symbol);
         newDataList.push(data);
       }
       setStockDataList(newDataList);
