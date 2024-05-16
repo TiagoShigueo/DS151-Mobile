@@ -1,7 +1,5 @@
 import {
   View,
-  Text,
-  StyleSheet,
   TextInput,
   ActivityIndicator,
   Button,
@@ -9,6 +7,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { signIn, signUp } from "../services/authService";
+import Idv from "../constants/Idv";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -38,17 +37,17 @@ const Login = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={Idv.centralizedContainer}>
       <KeyboardAvoidingView behavior="padding">
         <TextInput
-          style={styles.input}
+          style={Idv.input}
           value={email}
           placeholder="Email"
           autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
         />
         <TextInput
-          style={styles.input}
+          style={Idv.input}
           secureTextEntry={true}
           value={password}
           placeholder="Password"
@@ -70,19 +69,3 @@ const Login = () => {
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 20,
-    flex: 1,
-    justifyContent: "center",
-  },
-  input: {
-    marginVertical: 4,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 10,
-    backgroundColor: "fff",
-  },
-});

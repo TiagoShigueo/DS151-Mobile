@@ -1,36 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+import Idv from "../constants/Idv";
 
 // Componente Navbar
 const Navbar = () => {
   return (
-    <View style={styles.navbar}>
-      <Text style={styles.navbarTitle}>Funds Focus</Text>
+    <View style={Idv.navbar}>
+      <Text style={Idv.navbarTitle}>Funds Focus</Text>
     </View>
   );
 };
-
-// Estilos
-const styles = StyleSheet.create({
-  navbar: {
-    backgroundColor: "#333",
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  navbarTitle: {
-    color: "#fff",
-    fontSize: 20,
-  },
-  footer: {
-    backgroundColor: "#333",
-    padding: 10,
-    alignItems: "center",
-  },
-  footerText: {
-    color: "#fff",
-  },
-});
 
 export default Navbar;

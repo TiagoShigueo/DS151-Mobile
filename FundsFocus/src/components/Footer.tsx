@@ -1,8 +1,8 @@
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet, Button } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import Idv from "../constants/Idv";
 type RootStackParamList = {
   Home: undefined;
   Portfolio: undefined;
@@ -20,33 +20,19 @@ const Footer = () => {
   };
 
   return (
-    <View style={styles.footer}>
+    <View style={Idv.footer}>
       <TouchableOpacity onPress={() => navigateToScreen("Home")}>
-        <Text style={styles.buttonText}>Home</Text>
+        <Text style={Idv.buttonText}>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigateToScreen("Portfolio")}>
-        <Text style={styles.buttonText}>Carteira</Text>
+        <Text style={Idv.buttonText}>Carteira</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigateToScreen("My_todos")}>
-        <Text style={styles.buttonText}>List</Text>
+        <Text style={Idv.buttonText}>List</Text>
       </TouchableOpacity>
       {/* Adicione mais botões de navegação conforme necessário */}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#ccc",
-    paddingVertical: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
 
 export default Footer;
