@@ -8,49 +8,35 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { getUserId, setUserId } from "../utils/User";
+import { signIn, signUp } from "../services/authService";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("");
-  const auth = FIREBASE_AUTH;
 
-  const signIn = async () => {
-    setLoading(true);
+  const handleSignIn = async () => {
+    setLoading("true");
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      setUserId(response.user.uid);
-    } catch (error: any) {
-      console.log(error);
-      alert("Sign in failed: " + error.message);
+      await signIn(email, password);
+    } catch (error) {
+      console.error(error);
     } finally {
-      setLoading(false);
+      setLoading("false");
     }
   };
 
-  const signUp = async () => {
-    setLoading(true);
+  const handleSignUp = async () => {
+    setLoading("true");
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(response);
-      alert("Check your emails!");
-    } catch (error: any) {
-      console.log(error);
-      alert("Sign in failed: " + error.message);
+      await signUp(email, password);
+    } catch (error) {
+      console.error(error);
     } finally {
-      setLoading(false);
+      setLoading("false");
     }
   };
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
@@ -74,8 +60,8 @@ const Login = () => {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <>
-            <Button title="Login" onPress={signIn} />
-            <Button title="Create account" onPress={signUp} />
+            <Button title="Login" onPress={handleSignIn} />
+            <Button title="Create account" onPress={handleSignUp} />
           </>
         )}
       </KeyboardAvoidingView>
