@@ -19,17 +19,3 @@ export const alphaVantageGlobalQuote = async (symbol: string) => {
   }
 };
 
-export const alphaVantageSymbolSearch = async(symbol: string) => {
-  try {
-    // console.log('Ticker válidos na versão demo: \n -tesco\n -tencent\n -BA\n -SAT');
-    // const response = await axios.get (`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${symbol}&apikey=demo`);
-    const response = await axios.get('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo');
-    console.log(response.data.bestMatches);
-    return response.data;
-  } catch (error) {
-    console.error('Erro ao buscar os dados da API: ', error);
-    return null;
-  }
-}
-
-// export default {alphaVantageGlobalQuote, alphaVantageSymbolSearch};
