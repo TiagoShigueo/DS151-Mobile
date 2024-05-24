@@ -9,6 +9,16 @@ Tutorial baseado na documentação do Expo
 ### Criando um projeto
 
 `npx create-expo-app --template`
+ou
+`npx create-expo-app nomeDoProjeto -t expo-template-blank-typescript`
+
+### metro config
+
+`npx expo customize metro.config.js`
+
+### Expo na web
+
+`npx expo install react-dom react-native-web @expo/metro-runtime`
 
 ### Editando projeto
 
