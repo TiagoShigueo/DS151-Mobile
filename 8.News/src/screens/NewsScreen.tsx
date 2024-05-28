@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
   ScrollView,
   ActivityIndicator,
   StyleSheet,
   Button,
-  Linking,
+  Text,
 } from "react-native";
-import axios from "axios";
+import News from "../components/News";
+import { fetchNews } from "../services/newsService";
 
 const NewsScreen = () => {
   const [news, setNews] = useState([]);
@@ -19,30 +19,17 @@ const NewsScreen = () => {
   const pageSize = 5;
 
   useEffect(() => {
-    fetchNews();
-  }, [page]);
-
-  const fetchNews = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("https://newsapi.org/v2/everything", {
-        params: {
-          q: "Fundos de Investimentos Imobiliário",
-          language: "pt",
-          apiKey: "c108741640304c44a11efb0b2cf59c8d",
-          page: page,
-          pageSize: pageSize,
-          sortBy: "publishedAt",
-        },
-      });
-      setNews(response.data.articles);
-      setTotalResults(response.data.totalResults);
-    } catch (error) {
-      console.error("Erro ao buscar notícias: ", error);
-    } finally {
+    const loadNews = async () => {
+      setLoading(true);
+      const response = await fetchNews(page, pageSize);
+      if (response) {
+        setNews(response.articles);
+        setTotalResults(response.totalResults);
+      }
       setLoading(false);
-    }
-  };
+    };
+    loadNews();
+  }, [page]);
 
   const handleNextPage = () => {
     if (page * pageSize < totalResults) {
@@ -56,10 +43,6 @@ const NewsScreen = () => {
     }
   };
 
-  const openArticle = (url) => {
-    Linking.openURL(url);
-  };
-
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
@@ -68,12 +51,7 @@ const NewsScreen = () => {
     <View style={styles.container}>
       <ScrollView>
         {news.map((article, index) => (
-          <View key={index} style={styles.articleContainer}>
-            <Text style={styles.title} onPress={() => openArticle(article.url)}>
-              {article.title}
-            </Text>
-            <Text>{article.description}</Text>
-          </View>
+          <News key={index} article={article} />
         ))}
       </ScrollView>
       <View style={styles.paginationContainer}>
@@ -98,22 +76,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: "#f0f0f0",
-  },
-  articleContainer: {
-    marginBottom: 15,
-    padding: 10,
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "blue",
   },
   paginationContainer: {
     flexDirection: "row",
