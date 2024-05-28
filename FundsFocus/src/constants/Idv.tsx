@@ -1,18 +1,34 @@
 import { StyleSheet } from "react-native";
 
 const Idv = StyleSheet.create({
+  button: {
+    backgroundColor: "#000080",
+    padding: 10,
+    borderRadius: 5,
+    width: "auto",
+    alignItems: "center",
+    margin: 3,
+  },
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
   },
+  buttonTextWhite: {
+    // fontFamily: "Arial",
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#FFF",
+  },
   centralizedContainer: {
-    marginHorizontal: 20,
+    marginHorizontal: 40,
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#E0E0E0",
   },
   footer: {
     flexDirection: "row",
@@ -32,16 +48,25 @@ const Idv = StyleSheet.create({
   list: {
     flexDirection: "row",
   },
+  logo: {
+    width: 250,
+    height: 250,
+    resizeMode: "contain",
+  },
   navbar: {
     backgroundColor: "#333",
     padding: 10,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   navbarTitle: {
     color: "#fff",
     fontSize: 20,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
   },
   title: {
     fontSize: 25,

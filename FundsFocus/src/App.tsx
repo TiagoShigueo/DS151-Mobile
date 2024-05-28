@@ -4,8 +4,6 @@ import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
 import Login from "./screens/Login";
-import Details from "./screens/Details";
-import List from "./screens/List";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/Home";
@@ -24,11 +22,7 @@ function InsideLayout() {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-        <InsideStack.Screen
-          name="My_todos"
-          component={List}
-          options={{ headerShown: false }}
-        />
+
         <InsideStack.Screen
           name="Portfolio"
           component={Portfolio}

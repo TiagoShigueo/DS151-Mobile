@@ -1,9 +1,11 @@
 import {
   View,
+  Text,
   TextInput,
   ActivityIndicator,
-  Button,
   KeyboardAvoidingView,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { signIn, signUp } from "../services/authService";
@@ -14,31 +16,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("");
 
-  const handleSignIn = async () => {
-    setLoading("true");
-    try {
-      await signIn(email, password);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading("false");
-    }
-  };
-
-  const handleSignUp = async () => {
-    setLoading("true");
-    try {
-      await signUp(email, password);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading("false");
-    }
-  };
-
   return (
     <View style={Idv.centralizedContainer}>
       <KeyboardAvoidingView behavior="padding">
+        <Image
+          style={Idv.logo}
+          source={require("../../assets/logo.png")}
+          resizeMode="contain"
+        />
         <TextInput
           style={Idv.input}
           value={email}
@@ -56,11 +41,21 @@ const Login = () => {
         />
 
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#000080" />
         ) : (
           <>
-            <Button title="Login" onPress={handleSignIn} />
-            <Button title="Create account" onPress={handleSignUp} />
+            <TouchableOpacity
+              style={Idv.button}
+              onPress={() => signIn(email, password)}
+            >
+              <Text style={Idv.buttonTextWhite}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={Idv.button}
+              onPress={() => signUp(email, password)}
+            >
+              <Text style={Idv.buttonTextWhite}>Criar conta</Text>
+            </TouchableOpacity>
           </>
         )}
       </KeyboardAvoidingView>

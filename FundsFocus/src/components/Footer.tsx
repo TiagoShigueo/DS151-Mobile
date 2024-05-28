@@ -6,7 +6,6 @@ import Idv from "../constants/Idv";
 type RootStackParamList = {
   Home: undefined;
   Portfolio: undefined;
-  My_todos: undefined;
   // Adicione mais telas conforme necessário
 };
 type FooterNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -27,9 +26,7 @@ const Footer = () => {
       <TouchableOpacity onPress={() => navigateToScreen("Portfolio")}>
         <Text style={Idv.buttonText}>Carteira</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigateToScreen("My_todos")}>
-        <Text style={Idv.buttonText}>List</Text>
-      </TouchableOpacity>
+
       {/* Adicione mais botões de navegação conforme necessário */}
     </View>
   );

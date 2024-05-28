@@ -1,5 +1,5 @@
 import firestore, { firebase } from '@react-native-firebase/firestore';
-import { DocumentData, addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { DocumentData, addDoc, collection, getAggregateFromServer, getDocs, orderBy, query, sum } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../FirebaseConfig';
 import auth from '@react-native-firebase/auth';
 export const adicionarFiiNaCarteira = async (userId: string, novoFii: any) => {
@@ -27,17 +27,50 @@ export const obterCarteira = async (userId: string): Promise<any[] | null> => {
   }
 };
 
-// export const obterIdUsuario = () => {
-//   // const usuarioAtual = auth().currentUser;
-//   // if (usuarioAtual) {
-//   //   console.log('Usuário atual UId: ' + usuarioAtual.uid);
-//   //   return usuarioAtual.uid;
-//   // } else {
-//   //   console.log('Não foi possível buscar o UId do usuário');
-//   //   return null
-//   // }
+export const obterCarteiraOrdenada = async (userId: string): Promise<any[] | null> => {
+  try {
+    const q = query(collection(FIREBASE_DB, `carteiras/${userId}/ativos`), orderBy("codigo"));
+    const querySnapshot = await getDocs(q);
+    const carteira = querySnapshot.docs.map((doc) => ({
+      id:doc.id,
+      ...doc.data(),
+    }));
+    return carteira;
+  }catch (error) {
+    console.error('Erro ao obter carteira: ', error);
+    return null;
+  }
+};
 
-//   const user = firebase.auth().currentUser;
-//   if (user)
-//     console.log('User email: ', user.email);
-// }
+interface Ativo {
+  codigo: string;
+  quantidade: number;
+  valor: number;
+}
+
+export const obterCarteiraAgrupada = async (userId: string): Promise<any[] | null> => {
+  try {
+    const coll = collection(FIREBASE_DB, `carteiras/${userId}/ativos`);
+    const snapshot = await getDocs(coll);
+    const carteiraData: any[] = [];
+
+    snapshot.forEach((doc) => {
+      carteiraData.push(doc.data());
+    });
+
+    const carteiraAgrupada = carteiraData.reduce((acc, curr) => {
+      const { codigo, quantidade, valor } = curr;
+      if (!acc[codigo]) {
+        acc[codigo] = { codigo, quantidade: 0, valorTotal: 0 };
+      }
+      acc[codigo].quantidade += quantidade;
+      acc[codigo].valorTotal += quantidade * valor;
+      return acc;
+    }, {});
+
+    return Object.values(carteiraAgrupada);
+  } catch (error) {
+    console.error('Erro ao obter carteira: ', error);
+    return null;
+  }
+};
