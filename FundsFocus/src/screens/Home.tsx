@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  Button,
+  ScrollView,
+} from "react-native";
 import StockItem from "../components/StockItem";
+import Dividends from "../components/Dividends";
 import { alphaVantageGlobalQuote } from "../services/alphaVantage";
-import idv from "../constants/Idv";
+
+import { fetchNews } from "../services/newsService";
+import News from "../components/News";
+import Idv from "../constants/Idv";
 
 const HomeScreen = () => {
   const [stockDataList, setStockDataList] = useState([]);
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
+
+  const pageSize = 5;
 
   useEffect(() => {
     const symbols = ["IBM", "300135.SHZ"];
@@ -20,11 +37,38 @@ const HomeScreen = () => {
       setStockDataList(newDataList);
     };
     axiosDataForSymbols();
-  }, []);
+
+    const loadNews = async () => {
+      setLoading(true);
+      const response = await fetchNews(page, pageSize);
+      if (response) {
+        setNews(response.articles);
+        setTotalResults(response.totalResults);
+      }
+      setLoading(false);
+    };
+    loadNews();
+  }, [page]);
+
+  const handleNextPage = () => {
+    if (page * pageSize < totalResults) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
 
   return (
-    <View style={idv.container}>
-      <Text style={idv.title}>Mercado hoje</Text>
+    <View style={Idv.container}>
+      <Text style={Idv.title}>Mercado hoje</Text>
       {stockDataList.length > 0 ? (
         <FlatList
           data={stockDataList}
@@ -34,6 +78,25 @@ const HomeScreen = () => {
       ) : (
         <Text>Carregando...</Text>
       )}
+      {/* Talvez colocar os dividendos nessa tela, mas tenho medo de exceder as requisições diárias */}
+      <ScrollView>
+        {news.map((article, index) => (
+          <News key={index} article={article} />
+        ))}
+      </ScrollView>
+      <View style={Idv.paginationContainer}>
+        <Button
+          title="Anterior"
+          onPress={handlePreviousPage}
+          disabled={page === 1}
+        />
+        <Text>{`Página ${page}`}</Text>
+        <Button
+          title="Próxima"
+          onPress={handleNextPage}
+          disabled={page * pageSize >= totalResults}
+        />
+      </View>
     </View>
   );
 };

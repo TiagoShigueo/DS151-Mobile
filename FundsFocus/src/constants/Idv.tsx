@@ -1,6 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const Idv = StyleSheet.create({
+  articleContainer: {
+    marginBottom: 15,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
   button: {
     backgroundColor: "#000080",
     padding: 10,
@@ -63,6 +74,12 @@ const Idv = StyleSheet.create({
   navbarTitle: {
     color: "#fff",
     fontSize: 20,
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 20,
   },
   tinyLogo: {
     width: 50,
