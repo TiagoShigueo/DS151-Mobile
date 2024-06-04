@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 const Idv = StyleSheet.create({
   articleContainer: {
+    width: "100%",
     marginBottom: 15,
     padding: 10,
     backgroundColor: "#fff",

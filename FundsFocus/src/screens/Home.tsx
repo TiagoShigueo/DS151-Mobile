@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import StockItem from "../components/StockItem";
 import Dividends from "../components/Dividends";
@@ -78,24 +79,26 @@ const HomeScreen = () => {
       ) : (
         <Text>Carregando...</Text>
       )}
+
       {/* Talvez colocar os dividendos nessa tela, mas tenho medo de exceder as requisições diárias */}
-      <ScrollView>
-        {news.map((article, index) => (
-          <News key={index} article={article} />
-        ))}
-      </ScrollView>
-      <View style={Idv.paginationContainer}>
-        <Button
-          title="Anterior"
-          onPress={handlePreviousPage}
-          disabled={page === 1}
-        />
-        <Text>{`Página ${page}`}</Text>
-        <Button
-          title="Próxima"
-          onPress={handleNextPage}
-          disabled={page * pageSize >= totalResults}
-        />
+      <View style={{ height: "70%" }}>
+        <ScrollView>
+          {news.map((article, index) => (
+            <News key={index} article={article} />
+          ))}
+        </ScrollView>
+        <View style={Idv.paginationContainer}>
+          <TouchableOpacity
+            style={Idv.button}
+            onPress={() => handlePreviousPage()}
+          >
+            <Text style={Idv.buttonTextWhite}>Anterior</Text>
+          </TouchableOpacity>
+          <Text>{`Página ${page}`}</Text>
+          <TouchableOpacity style={Idv.button} onPress={() => handleNextPage()}>
+            <Text style={Idv.buttonTextWhite}>Próxima</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
