@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   TextInput,
   Text,
   View,
@@ -33,14 +32,12 @@ const Portfolio = () => {
     readRemoteFile("/src/data/fiisB3.csv", {
       complete: (results: any) => {
         const csvDataArray = results.data;
-        console.log(results.data);
         const convertedData = csvDataArray.map(
           (item: { [x: string]: any }) => ({
             label: item["Codigo"],
             value: item["Codigo"],
           })
         );
-        console.log("convertedData: ", convertedData);
         setItems(convertedData);
       },
 
@@ -69,13 +66,10 @@ const Portfolio = () => {
     try {
       /* ?? é o operador de coalescência nula, que fornece um valor padrão no caso de userId ser nulo */
       const userId = (await getUserId()) ?? "";
-      console.log("Código: ", codigoFii.value);
-      console.log("Quantidade: ", parseInt(quantidadeFii));
-      console.log("Valor: ", parseFloat(valorFii));
       const novoFii = {
-        // codigo: codigoFii.value,
+        codigo: codigoFii.value,
         // codigo: "IBM",
-        codigo: "300135.SHZ",
+        // codigo: "300135.SHZ",
         quantidade: parseInt(quantidadeFii),
         valor: parseFloat(valorFii),
       };
@@ -105,11 +99,9 @@ const Portfolio = () => {
             onChange={(item) => {
               setCodigoFii(item);
               setIsFocus(false);
-              // console.log(codigoFii);
             }}
           />
         </View>
-
         <TextInput
           placeholder="Quantidade de cotas"
           value={quantidadeFii}
@@ -128,6 +120,7 @@ const Portfolio = () => {
           <Text style={Idv.buttonTextWhite}>Adicionar FII</Text>
         </TouchableOpacity>
       </View>
+
       <FlatList
         data={carteira}
         renderItem={({ item }) => <PortfolioItem item={item} />}
