@@ -73,32 +73,43 @@ This API returns raw (as-traded) daily time series (date, daily open, daily high
 
 > https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo
 
+Exemplo com o HGBS11
+
 ```
 {
     "Meta Data": {
         "1. Information": "Monthly Adjusted Prices and Volumes",
-        "2. Symbol": "IBM",
-        "3. Last Refreshed": "2024-05-06",
+        "2. Symbol": "hgbs11.sa",
+        "3. Last Refreshed": "2024-05-27",
         "4. Time Zone": "US/Eastern"
     },
     "Monthly Adjusted Time Series": {
-        "2024-05-06": {
-            "1. open": "165.6900",
-            "2. high": "168.6700",
-            "3. low": "162.6200",
-            "4. close": "168.6100",
-            "5. adjusted close": "168.6100",
-            "6. volume": "15483484",
+        "2024-05-27": {
+            "1. open": "221.2000",
+            "2. high": "222.4900",
+            "3. low": "217.4500",
+            "4. close": "218.0000",
+            "5. adjusted close": "218.0000",
+            "6. volume": "349669",
             "7. dividend amount": "0.0000"
         },
         "2024-04-30": {
-            "1. open": "190.0000",
-            "2. high": "193.2800",
-            "3. low": "165.2605",
-            "4. close": "166.2000",
-            "5. adjusted close": "166.2000",
-            "6. volume": "98297181",
-            "7. dividend amount": "0.0000"
+            "1. open": "227.6100",
+            "2. high": "229.8300",
+            "3. low": "221.1000",
+            "4. close": "222.6900",
+            "5. adjusted close": "220.9400",
+            "6. volume": "409965",
+            "7. dividend amount": "1.7500"
+        },
+        "2024-03-28": {
+            "1. open": "229.0100",
+            "2. high": "231.9900",
+            "3. low": "225.0000",
+            "4. close": "228.8900",
+            "5. adjusted close": "227.1400",
+            "6. volume": "455178",
+            "7. dividend amount": "1.7500"
         },
         (...)
     }

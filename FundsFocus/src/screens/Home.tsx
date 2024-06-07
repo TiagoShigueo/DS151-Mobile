@@ -7,6 +7,7 @@ import {
   Button,
   ScrollView,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import StockItem from "../components/StockItem";
 import Dividends from "../components/Dividends";

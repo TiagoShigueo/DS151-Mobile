@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/Home";
 import Portfolio from "./screens/Portfolio";
+import { SafeAreaView } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
@@ -44,26 +45,28 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        {user ? (
-          <Stack.Screen
-            name="Inside"
-            component={InsideLayout}
-            options={{
-              headerShown: false,
-            }} /* Some com o Header onde ficava aquele Título da página */
-          />
-        ) : (
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              headerShown: false,
-            }} /* Some com o Header onde ficava aquele Título da página */
-          />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1, paddingTop: 30 }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          {user ? (
+            <Stack.Screen
+              name="Inside"
+              component={InsideLayout}
+              options={{
+                headerShown: false,
+              }} /* Some com o Header onde ficava aquele Título da página */
+            />
+          ) : (
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+              }} /* Some com o Header onde ficava aquele Título da página */
+            />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }

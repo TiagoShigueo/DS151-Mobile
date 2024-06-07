@@ -17,6 +17,7 @@ import PortfolioItem from "../components/PortfolioItem";
 import { readRemoteFile } from "react-native-csv";
 import { Dropdown } from "react-native-element-dropdown";
 import Idv from "../constants/Idv";
+import { fiis } from "../data/fiisB3";
 
 const Portfolio = () => {
   const [codigoFii, setCodigoFii] = useState("");
@@ -29,20 +30,31 @@ const Portfolio = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    readRemoteFile("/src/data/fiisB3.csv", {
-      complete: (results: any) => {
-        const csvDataArray = results.data;
-        const convertedData = csvDataArray.map(
-          (item: { [x: string]: any }) => ({
-            label: item["Codigo"],
-            value: item["Codigo"],
-          })
-        );
-        setItems(convertedData);
-      },
+    // readRemoteFile("/src/data/fiisB3.csv", {
+    //   complete: (results: any) => {
+    //     console.log("Chegou");
+    //     const csvDataArray = results.data;
+    //     const convertedData = csvDataArray.map(
+    //       (item: { [x: string]: any }) => ({
+    //         label: item["Codigo"],
+    //         value: item["Codigo"],
+    //       })
+    //     );
+    //     console.log(convertedData);
+    //     setItems(convertedData);
+    //   },
+    //   error: (error: any) => {
+    //     console.error("Erro ao ler o CSV: ", JSON.stringify(error));
+    //   },
 
-      header: true,
-    });
+    //   header: true,
+    // });
+
+    const convertedData = fiis.map((item: { [x: string]: any }) => ({
+      label: item["Codigo"],
+      value: item["Codigo"],
+    }));
+    setItems(convertedData);
 
     carregarCarteira();
   }, []);
@@ -84,7 +96,7 @@ const Portfolio = () => {
   return (
     <View style={Idv.container}>
       <View style={Idv.centralizedContainer}>
-        <View>
+        <View style={{ width: 190 }}>
           <Dropdown
             style={Idv.input}
             data={items}
