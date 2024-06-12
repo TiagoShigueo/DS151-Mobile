@@ -27,7 +27,7 @@ const HomeScreen = () => {
   const pageSize = 5;
 
   useEffect(() => {
-    const symbols = ["IBM", "300135.SHZ"];
+    const symbols = ["KNIP11.SA", "KNCR11.SA", "XPML11.SA", "HGLG11.SA"];
 
     const newDataList: any = [];
 
@@ -82,7 +82,7 @@ const HomeScreen = () => {
       )}
 
       {/* Talvez colocar os dividendos nessa tela, mas tenho medo de exceder as requisições diárias */}
-      <View style={{ height: "70%" }}>
+      <View style={{ height: "65%" }}>
         <ScrollView>
           {news.map((article, index) => (
             <News key={index} article={article} />
